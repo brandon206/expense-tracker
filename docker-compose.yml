@@ -1,0 +1,59 @@
+version: "3.7"
+
+networks:
+  expensetracker:
+    name: expensetracker
+    driver: bridge
+
+services:
+  app:
+    build:
+      args:
+        user: brandon
+        uid: 1001
+      context: ./
+      dockerfile: Dockerfile
+    image: expensetracker
+    container_name: expensetracker-app
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - expensetracker
+  db:
+    image: mysql:5.7
+    container_name: expensetracker-db
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: expensetracker
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_PASSWORD: secret
+      MYSQL_USER: expensetracker_user
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - expensetracker
+  nginx:
+    image: nginx:stable-alpine
+    container_name: expensetracker-nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - expensetracker
+  composer:
+    image: composer:latest
+    container_name: expensetracker-composer
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - expensetracker
+  
