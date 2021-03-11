@@ -4,8 +4,13 @@ const routes = [
         component: () => import ('../Pages/Overview.vue'),
         name: 'overview',
     },
+    // {
+    //     path: '/ledger',
+    //     component: () => import ('../Pages/Ledger.vue'),
+    //     name: 'ledger',
+    // },
     {
-        path: '/ledger',
+        path: '/ledger/:id',
         component: () => import ('../Pages/Ledger.vue'),
         name: 'ledger',
     },

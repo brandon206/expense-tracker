@@ -25,6 +25,9 @@
         "vuex": "^3.6.2"
     },
     "dependencies": {
+        "apollo-boost": "^0.4.9",
+        "graphql": "^15.2.0",
+        "vue-apollo": "^3.0.3",
         "vuetify": "^2.4.4"
     }
 }
