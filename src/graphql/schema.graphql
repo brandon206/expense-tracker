@@ -4,9 +4,20 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
+enum Status {
+  created
+  deleted
+}
+
 type Query {
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
+    transactions: [Transaction!]! @all
+    transaction(id: ID! @eq): Transaction! @find
+    categories: [Category!]! @all
+    category(name: String! @eq): Category @find
+    ledgers: [Ledger!]! @all
+    ledger(id: ID! @eq): Ledger! @find
 }
 
 type User {
@@ -15,4 +26,38 @@ type User {
     email: String!
     created_at: DateTime!
     updated_at: DateTime!
+    ledger: Ledger! @hasOne
 }
+
+type Ledger {
+    id: ID!
+    name: String!
+    description: String!
+    transactions: [Transaction!]! @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
+    user: User! @belongsTo
+}
+
+type Category {
+    id: ID!
+    name: String!
+    created_at: DateTime
+    updated_at: DateTime
+    transactions: [Transaction!]! @hasMany
+}
+
+type Transaction {
+    id: ID!
+    amount: Float!
+    description: String!
+    is_repeating: Boolean!
+    status: String!
+    category: Category! @belongsTo
+    ledger: Ledger! @belongsTo
+    status: Status!
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+
