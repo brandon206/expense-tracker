@@ -2,14 +2,17 @@
     <div>
         <v-app>
             <v-container>
-                <h1>Overview Page</h1>
+                <v-row>
+                    <h1>Overview Page</h1>
+                </v-row>
             </v-container>
         </v-app>
     </div>
 </template>
 
 <script>
-export default {};
+export default {
+};
 </script>
 
 <style></style>
