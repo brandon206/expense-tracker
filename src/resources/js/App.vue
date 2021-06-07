@@ -1,17 +1,18 @@
 <template>
     <v-app>
         <div>
+            <!-- <Navbar /> -->
             <Navbar />
-            <v-main>
+            <v-content>
                 <router-view />
-            </v-main>
+            </v-content>
         </div>
     </v-app>
 </template>
 
 <script>
 import "./Styles/app.scss";
-import Navbar from "./components/Navbar";
+import Navbar from "./Components/Navbar";
 
 export default {
     name: "app",
